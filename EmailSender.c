@@ -161,9 +161,41 @@ int main (int argc, char ** argv)
 	}
 	
 	// Send message data.
-	
+	strcpy(sendline, "SUBJECT: hello");
+	printf("%s\n", sendline);
+	write(sockfd, sendline, MAXLINE);
+
+	strcpy(sendline, "Hi Kevin, How's the weather? Kevin.");
+	printf("%s\n", sendline);
+	write(sockfd, sendline, MAXLINE);
+
 	// End with a single period.
+	strcpy(sendline, ".");
+	printf("%s\n", sendline);
+	write(sockfd, sendline, MAXLINE);
+
+	read(sockfd, recvline, MAXLINE);
+	printf("%s\n", recvline);
+	temp = strtok(recvline, " ");
+	if (strcmp(temp, "250")!=0)
+	{
+		printf("250 reply not received from server.\n");
+		exit(0);
+	}	
+	
 	// Send QUIT command.
+	strcpy(sendline, "QUIT");
+	printf("%s\n", sendline);
+	write(sockfd, sendline, MAXLINE);
+
+	read(sockfd, recvline, MAXLINE);
+	printf("%s\n", recvline);
+	temp = strtok(recvline, " ");
+	if (strcmp(temp, "250")!=0)
+	{
+		printf("250 reply not received from server.\n");
+		exit(0);
+	}
 
 	exit(0);	
 }  
