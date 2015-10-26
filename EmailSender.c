@@ -49,9 +49,6 @@ int main (int argc, char ** argv)
 	}
 	strcpy(recipient_address, argv[1]);		// set "RCPT TO" address.
 
-	/* See if code runs until here */
-	//printf("about to establish TCP connection...");
-
 	/* Establish a TCP connection with the main server */
 	int sockfd;							// Socket descriptor.
 	struct sockaddr_in serveraddr;		// Server address.
@@ -67,9 +64,6 @@ int main (int argc, char ** argv)
 		return 0;
 	}
 
-	/* See if code runs until here */
-	//printf("socket() successful");
-
 	/* Construct the server address structure */
 	memset(&serveraddr, 0, sizeof(serveraddr));			// Zero out structure.
 	serveraddr.sin_family 		= AF_INET;				// Internet address family.
@@ -81,9 +75,6 @@ int main (int argc, char ** argv)
 		printf("connect() failed");
 		return 0;
 	}
-	
-	/* See if code runs until here */
-	//printf("connect() successful");
 
 	/* Read greeting from the server */
 	read(sockfd, recvline, MAXLINE);
@@ -121,7 +112,7 @@ int main (int argc, char ** argv)
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
 
-	memset(recvline, '\0', sizeof(recvline));	
+	memset(recvline, '\0', sizeof(recvline));	 // clear recvline
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
@@ -138,7 +129,7 @@ int main (int argc, char ** argv)
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
 
-	memset(recvline, '\0', sizeof(recvline));
+	memset(recvline, '\0', sizeof(recvline)); // clear recvline
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
@@ -154,29 +145,11 @@ int main (int argc, char ** argv)
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
 
-	memset(recvline, '\0', sizeof(recvline));
+	memset(recvline, '\0', sizeof(recvline)); // clear recvline
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
-	/*
-	temp = strtok(recvline, " ");
-	if (strcmp(temp, "250")!=0)
-	{
-		printf("250 reply not received from server.\n");
-		exit(0);
-	}
-	*/
 	
 	// Send message data.
-	/*
-	strcpy(sendline, "SUBJECT: hello\r\n");
-	printf("%s\n", sendline);
-	write(sockfd, sendline, strlen(sendline));
-
-	strcpy(sendline, "Hi Kevin, How's the weather? Kevin.\r\n");
-	printf("%s\n", sendline);
-	write(sockfd, sendline, strlen(sendline));
-	*/
-
 	strcpy(sendline, "SUBJECT: hello\r\n\r\nHi Kevin, How's the weather? Kevin.\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));	
@@ -186,7 +159,7 @@ int main (int argc, char ** argv)
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
 
-	memset(recvline, '\0', sizeof(recvline));
+	memset(recvline, '\0', sizeof(recvline));	// clear recvline
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
@@ -201,17 +174,10 @@ int main (int argc, char ** argv)
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
 
-	memset(recvline, '\0', sizeof(recvline));
+	memset(recvline, '\0', sizeof(recvline)); // clear recvline
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
-	/*
-	if (strcmp(temp, "250")!=0)
-	{
-		printf("250 reply not received from server.\n");
-		exit(0);
-	}
-	*/
 
 	exit(0);	
 }  
