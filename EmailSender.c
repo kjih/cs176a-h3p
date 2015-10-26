@@ -100,6 +100,7 @@ int main (int argc, char ** argv)
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
 	
+	memset(recvline, '\0', sizeof(recvline));
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
@@ -119,7 +120,8 @@ int main (int argc, char ** argv)
 	strcat(sendline, ">\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
-	
+
+	memset(recvline, '\0', sizeof(recvline));	
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
@@ -136,6 +138,7 @@ int main (int argc, char ** argv)
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
 
+	memset(recvline, '\0', sizeof(recvline));
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
@@ -151,16 +154,20 @@ int main (int argc, char ** argv)
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
 
+	memset(recvline, '\0', sizeof(recvline));
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
+	/*
 	temp = strtok(recvline, " ");
 	if (strcmp(temp, "250")!=0)
 	{
 		printf("250 reply not received from server.\n");
 		exit(0);
 	}
+	*/
 	
 	// Send message data.
+	/*
 	strcpy(sendline, "SUBJECT: hello\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
@@ -168,12 +175,18 @@ int main (int argc, char ** argv)
 	strcpy(sendline, "Hi Kevin, How's the weather? Kevin.\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
+	*/
+
+	strcpy(sendline, "SUBJECT: hello\r\n\r\nHi Kevin, How's the weather? Kevin.\r\n");
+	printf("%s\n", sendline);
+	write(sockfd, sendline, strlen(sendline));	
 
 	// End with a single period.
 	strcpy(sendline, ".\r\n");
 	printf("%s\n", sendline);
-	write(sockfd, sendline, MAXLINE);
+	write(sockfd, sendline, strlen(sendline));
 
+	memset(recvline, '\0', sizeof(recvline));
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
@@ -186,16 +199,19 @@ int main (int argc, char ** argv)
 	// Send QUIT command.
 	strcpy(sendline, "QUIT\r\n");
 	printf("%s\n", sendline);
-	write(sockfd, sendline, MAXLINE);
+	write(sockfd, sendline, strlen(sendline));
 
+	memset(recvline, '\0', sizeof(recvline));
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
+	/*
 	if (strcmp(temp, "250")!=0)
 	{
 		printf("250 reply not received from server.\n");
 		exit(0);
 	}
+	*/
 
 	exit(0);	
 }  
