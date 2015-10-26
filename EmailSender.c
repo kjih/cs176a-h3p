@@ -98,7 +98,7 @@ int main (int argc, char ** argv)
 	/* Send HELO command and get server response */
 	strcpy(sendline, "HELO kjih\r\n");
 	printf("%s\n", sendline);
-	write(sockfd, sendline, MAXLINE);
+	write(sockfd, sendline, strlen(sendline));
 	
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
@@ -109,17 +109,16 @@ int main (int argc, char ** argv)
 		exit(0);
 	}
 	
-	char sendline2[MAXLINE];
 	// Send MAIL FROM command.
 	strcpy(sender_address, "kjih@umail.ucsb.edu"); 	// NOTE: replace address with your own.
 	
 	//strcpy(sendline, "MAIL FROM: <alice@crepes.fr>\r\n");
 	//strcpy(sendline, "MAIL FROM: <kjih@umail.ucsb.edu>\r\n");
-	strcpy(sendline2, "\nMAIL FROM: <");
-	strcat(sendline2, sender_address);
-	strcat(sendline2, ">\r\n");
-	printf("%s\n", sendline2);
-	write(sockfd, sendline2, MAXLINE);;
+	strcpy(sendline, "MAIL FROM: <");
+	strcat(sendline, sender_address);
+	strcat(sendline, ">\r\n");
+	printf("%s\n", sendline);
+	write(sockfd, sendline, strlen(sendline));
 	
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
@@ -131,11 +130,11 @@ int main (int argc, char ** argv)
 	}
 		
 	// Send RCPT TO command.
-	strcpy(sendline, "\r\nRCPT TO: <");
+	strcpy(sendline, "RCPT TO: <");
 	strcat(sendline, recipient_address);
 	strcat(sendline, ">\r\n");
 	printf("%s\n", sendline);
-	write(sockfd, sendline, MAXLINE);
+	write(sockfd, sendline, strlen(sendline));
 
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
@@ -148,9 +147,9 @@ int main (int argc, char ** argv)
 
 	
 	// Send DATA command.
-	strcpy(sendline, "\r\nDATA");
+	strcpy(sendline, "DATA\r\n");
 	printf("%s\n", sendline);
-	write(sockfd, sendline, MAXLINE);
+	write(sockfd, sendline, strlen(sendline));
 
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
@@ -162,16 +161,16 @@ int main (int argc, char ** argv)
 	}
 	
 	// Send message data.
-	strcpy(sendline, "SUBJECT: hello");
+	strcpy(sendline, "SUBJECT: hello\r\n");
 	printf("%s\n", sendline);
-	write(sockfd, sendline, MAXLINE);
+	write(sockfd, sendline, strlen(sendline));
 
-	strcpy(sendline, "Hi Kevin, How's the weather? Kevin.");
+	strcpy(sendline, "Hi Kevin, How's the weather? Kevin.\r\n");
 	printf("%s\n", sendline);
-	write(sockfd, sendline, MAXLINE);
+	write(sockfd, sendline, strlen(sendline));
 
 	// End with a single period.
-	strcpy(sendline, "\r\n.");
+	strcpy(sendline, ".\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, MAXLINE);
 
@@ -185,7 +184,7 @@ int main (int argc, char ** argv)
 	}	
 	
 	// Send QUIT command.
-	strcpy(sendline, "QUIT");
+	strcpy(sendline, "QUIT\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, MAXLINE);
 
