@@ -110,6 +110,16 @@ int main (int argc, char ** argv)
 	strcpy(sendline, "MAIL FROM: <");
 	strcat(sendline, sender_address);
 	strcat(sendline, ">\r\n");
+	write(sockfd, sendline, MAXLINE);
+	
+	read(sockfd, recvline, MAXLINE);
+	printf("%s\n", recvline);
+	temp = strtok(recvline, " ");
+	if (strcmp(temp, "250")!=0)
+	{
+		printf("250 reply not received from server.\n");
+		exit(0);
+	}
 		
 	// Send RCPT TO command.
 	
