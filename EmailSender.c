@@ -32,7 +32,6 @@ char *Server_IP = "128.111.41.14"; 	// NOTE: IP of the mail server after running
 
 int main (int argc, char ** argv)
 {
-	printf("hi");
 	char sendline[MAXLINE], recvline[MAXLINE];
 	char recipient_address[MAXLINE]; // "RCPT TO" address.
 	char sender_address[MAXLINE];	 // "MAIL FROM" adress.
@@ -47,7 +46,7 @@ int main (int argc, char ** argv)
 	strcpy(recipient_address, argv[1]);		// set "RCPT TO" address.
 
 	/* See if code runs until here */
-	printf("about to establish TCP connection...");
+	//printf("about to establish TCP connection...");
 
 	/* Establish a TCP connection with the main server */
 	int sockfd;							// Socket descriptor.
@@ -65,7 +64,7 @@ int main (int argc, char ** argv)
 	}
 
 	/* See if code runs until here */
-	printf("socket() successful");
+	//printf("socket() successful");
 
 	/* Construct the server address structure */
 	memset(&serveraddr, 0, sizeof(serveraddr));			// Zero out structure.
@@ -93,7 +92,7 @@ int main (int argc, char ** argv)
 	}
 	
 	/* Send HELO command and get server response */
-	strcpy(sendline, "HELO alice\r\n");
+	strcpy(sendline, "HELO kjih\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, MAXLINE);
 	
@@ -108,6 +107,9 @@ int main (int argc, char ** argv)
 	
 	// Send MAIL FROM command.
 	strcpy(sender_address, "kjih@umail.ucsb.edu"); 	// NOTE: replace address with your own.
+	strcpy(sendline, "MAIL FROM: <");
+	strcat(sendline, sender_address);
+	strcat(sendline, ">\r\n");
 		
 	// Send RCPT TO command.
 	
