@@ -30,10 +30,9 @@
 
 char *Server_IP = "128.111.41.14"; 	// NOTE: IP of the mail server after running "nslookup -type=MX cs.ucsb.edu".  Hence you will need to change this value.
 
-void DieWithError(char *errorMessage);	// Error handling function.
-
 int main (int argc, char ** argv)
 {
+	printf("hi");
 	char sendline[MAXLINE], recvline[MAXLINE];
 	char recipient_address[MAXLINE]; // "RCPT TO" address.
 	char sender_address[MAXLINE];	 // "MAIL FROM" adress.
@@ -47,26 +46,42 @@ int main (int argc, char ** argv)
 	}
 	strcpy(recipient_address, argv[1]);		// set "RCPT TO" address.
 
-			
+	/* See if code runs until here */
+	printf("about to establish TCP connection...");
+
 	/* Establish a TCP connection with the main server */
-	int sockfd;						// Socket descriptor.
-	struct sockaddr_in serveraddr;	// Server address.
-	unsigned short serverPort;		// Server Port.
-	char *serverIP;					// Server IP.
+	int sockfd;							// Socket descriptor.
+	struct sockaddr_in serveraddr;		// Server address.
+	unsigned short serverPort;			// Server Port.
+	char *serverIP;						// Server IP.
 
-	strcpy(serverIP, "207.46.163.247");
 	serverPort = 25;	// set Port to 25, default SMTP port.
+	serverIP = Server_IP;
 
-	/* Create a reliable, stream socket using TCP */
-	if ((sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
-		DieWithError("socket() failed");
+	/* Create reliable, stream socket using TCP */
+	if ((sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) {
+		printf("socket() failed");
+		return 0;
+	}
 
+	/* See if code runs until here */
+	printf("socket() successful");
+
+	/* Construct the server address structure */
+	memset(&serveraddr, 0, sizeof(serveraddr));			// Zero out structure.
+	serveraddr.sin_family 		= AF_INET;				// Internet address family.
+	serveraddr.sin_addr.s_addr 	= inet_addr(serverIP);	// Server IP address.
+	serveraddr.sin_port 		= htons(serverPort);	// Server port.
+
+	/* Establish the connection to the server */
+	if (connect(sockfd, (struct sockaddr *) &serveraddr, sizeof(serveraddr)) < 0) {
+		printf("connect() failed");
+		return 0;
+	}
 	
-	
-	
-	
-	
-	
+	/* See if code runs until here */
+	printf("connect() successful");
+
 	/* Read greeting from the server */
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);	
