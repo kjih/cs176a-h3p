@@ -115,7 +115,7 @@ int main (int argc, char ** argv)
 	
 	//strcpy(sendline, "MAIL FROM: <alice@crepes.fr>\r\n");
 	//strcpy(sendline, "MAIL FROM: <kjih@umail.ucsb.edu>\r\n");
-	strcpy(sendline2, "MAIL FROM: <");
+	strcpy(sendline2, "\nMAIL FROM: <");
 	strcat(sendline2, sender_address);
 	strcat(sendline2, ">\r\n");
 	printf("%s\n", sendline2);
