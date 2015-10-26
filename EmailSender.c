@@ -109,16 +109,17 @@ int main (int argc, char ** argv)
 		exit(0);
 	}
 	
+	char sendline2[MAXLINE];
 	// Send MAIL FROM command.
 	strcpy(sender_address, "kjih@umail.ucsb.edu"); 	// NOTE: replace address with your own.
 	
 	//strcpy(sendline, "MAIL FROM: <alice@crepes.fr>\r\n");
 	//strcpy(sendline, "MAIL FROM: <kjih@umail.ucsb.edu>\r\n");
-	strcpy(sendline, "MAIL FROM: <");
-	strcat(sendline, sender_address);
-	strcat(sendline, ">\r\n");
-	printf("%s\n", sendline);
-	write(sockfd, sendline, strlen(sendline));
+	strcpy(sendline2, "MAIL FROM: <");
+	strcat(sendline2, sender_address);
+	strcat(sendline2, ">\r\n");
+	printf("%s\n", sendline2);
+	write(sockfd, sendline2, MAXLINE);;
 	
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
