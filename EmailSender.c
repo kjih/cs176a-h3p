@@ -118,7 +118,7 @@ int main (int argc, char ** argv)
 	strcat(sendline, sender_address);
 	strcat(sendline, ">\r\n");
 	printf("%s\n", sendline);
-	write(sockfd, sendline, MAXLINE);
+	write(sockfd, sendline, strlen(sendline));
 	
 	read(sockfd, recvline, MAXLINE);
 	printf("%s\n", recvline);
@@ -130,7 +130,7 @@ int main (int argc, char ** argv)
 	}
 		
 	// Send RCPT TO command.
-	strcpy(sendline, "RCPT TO: <");
+	strcpy(sendline, "\r\nRCPT TO: <");
 	strcat(sendline, recipient_address);
 	strcat(sendline, ">\r\n");
 	printf("%s\n", sendline);
@@ -147,7 +147,7 @@ int main (int argc, char ** argv)
 
 	
 	// Send DATA command.
-	strcpy(sendline, "DATA");
+	strcpy(sendline, "\r\nDATA");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, MAXLINE);
 
@@ -170,7 +170,7 @@ int main (int argc, char ** argv)
 	write(sockfd, sendline, MAXLINE);
 
 	// End with a single period.
-	strcpy(sendline, ".");
+	strcpy(sendline, "\r\n.");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, MAXLINE);
 
