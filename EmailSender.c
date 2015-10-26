@@ -83,7 +83,7 @@ int main (int argc, char ** argv)
 	}
 	
 	/* See if code runs until here */
-	printf("connect() successful");
+	//printf("connect() successful");
 
 	/* Read greeting from the server */
 	read(sockfd, recvline, MAXLINE);
@@ -91,7 +91,7 @@ int main (int argc, char ** argv)
 	temp = strtok(recvline, " ");
 	if (strcmp(temp, "220")!=0)
 	{
-		printf("220 reply ont received from server.\n");
+		printf("220 reply not received from server.\n");
 		exit(0);
 	}
 	
@@ -110,7 +110,6 @@ int main (int argc, char ** argv)
 	}
 	
 	// Send MAIL FROM command.
-	strcpy(recvline, ""); 	// clear recvline.
 	strcpy(sender_address, "kjih@umail.ucsb.edu"); 	// NOTE: replace address with your own.
 	
 	//strcpy(sendline, "MAIL FROM: <alice@crepes.fr>\r\n");
@@ -131,7 +130,6 @@ int main (int argc, char ** argv)
 	}
 		
 	// Send RCPT TO command.
-	strcpy(recvline, ""); 	// clear recvline.
 	strcpy(sendline, "RCPT TO: <");
 	strcat(sendline, recipient_address);
 	strcat(sendline, ">\r\n");
@@ -149,7 +147,6 @@ int main (int argc, char ** argv)
 
 	
 	// Send DATA command.
-	strcpy(recvline, ""); 	// clear recvline.
 	strcpy(sendline, "DATA\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, strlen(sendline));
@@ -173,7 +170,6 @@ int main (int argc, char ** argv)
 	write(sockfd, sendline, strlen(sendline));
 
 	// End with a single period.
-	strcpy(recvline, ""); 	// clear recvline.
 	strcpy(sendline, ".\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, MAXLINE);
@@ -188,7 +184,6 @@ int main (int argc, char ** argv)
 	}	
 	
 	// Send QUIT command.
-	strcpy(recvline, ""); 	// clear recvline.
 	strcpy(sendline, "QUIT\r\n");
 	printf("%s\n", sendline);
 	write(sockfd, sendline, MAXLINE);
