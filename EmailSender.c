@@ -30,23 +30,36 @@
 
 char *Server_IP = "128.111.41.14"; 	// NOTE: IP of the mail server after running "nslookup -type=MX cs.ucsb.edu".  Hence you will need to change this value.
 
-void main (int argc, char ** argv)
+void DieWithError(char *errorMessage);	// Error handling function.
+
+int main (int argc, char ** argv)
 {
 	char sendline[MAXLINE], recvline[MAXLINE];
 	char recipient_address[MAXLINE]; // "RCPT TO" address.
 	char sender_address[MAXLINE];	 // "MAIL FROM" adress.
 	char *temp;
+
 	
 	if (argc != 2)
 	{
 		printf("usage: ./EmailSender <recipient address,\"RCPT TO\">\n");
 		exit(0);
 	}
-	strcpy(recipient_address, argv[1]);
+	strcpy(recipient_address, argv[1]);		// set "RCPT TO" address.
+
 			
 	/* Establish a TCP connection with the main server */
-	int sockfd;
-	struct sockaddr_in serveraddr;
+	int sockfd;						// Socket descriptor.
+	struct sockaddr_in serveraddr;	// Server address.
+	unsigned short serverPort;		// Server Port.
+	char *serverIP;					// Server IP.
+
+	strcpy(serverIP, "207.46.163.247");
+	serverPort = 25;	// set Port to 25, default SMTP port.
+
+	/* Create a reliable, stream socket using TCP */
+	if ((sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0)
+		DieWithError("socket() failed");
 
 	
 	
@@ -79,7 +92,7 @@ void main (int argc, char ** argv)
 	}
 	
 	// Send MAIL FROM command.
-	strcpy(sender_address, "youraddress@cs.ucsb.edu"); 	// NOTE: replace address with your own.
+	strcpy(sender_address, "kjih@umail.ucsb.edu"); 	// NOTE: replace address with your own.
 		
 	// Send RCPT TO command.
 	
