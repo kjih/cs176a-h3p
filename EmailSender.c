@@ -32,7 +32,7 @@
 #define SMTP_PORT 25
 #define MAXLINE 1024 			// NOTE: Can be modified to any size you want.
 
-char *Server_IP = "128.111.41.14"; 	// NOTE: IP of the mail server after running "nslookup -type=MX cs.ucsb.edu".  Hence you will need to change this value.
+char *Server_IP = "207.46.163.215"; 	// NOTE: IP of the mail server after running "nslookup -type=MX cs.ucsb.edu".  Hence you will need to change this value.
 
 int main (int argc, char ** argv)
 {
