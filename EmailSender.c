@@ -1,4 +1,6 @@
 /*
+* Kevin Jih
+* Fall 2015
 * CS 176A Programming Assignment 3
 *
 * The command line arguments should be:
@@ -12,6 +14,8 @@
 * 3- INCLUDE comments in the code to show what is going on (not too detailed).
 * 4- INCLUDE a README file if something did not run properly. That will help you receive partial credit.
 *
+* TCP Client Code Referenced From: "TCP/IP Sockets in C"
+* 	Authors: Michael J. Donahoo, Kenneth L. Calvert
 */
 
 #include <stdlib.h>
@@ -107,9 +111,13 @@ int main (int argc, char ** argv)
 	
 	// Send MAIL FROM command.
 	strcpy(sender_address, "kjih@umail.ucsb.edu"); 	// NOTE: replace address with your own.
+	
+	//strcpy(sendline, "MAIL FROM: <alice@crepes.fr>\r\n");
+	//strcpy(sendline, "MAIL FROM: <kjih@umail.ucsb.edu>\r\n");
 	strcpy(sendline, "MAIL FROM: <");
 	strcat(sendline, sender_address);
 	strcat(sendline, ">\r\n");
+	printf("%s\n", sendline);
 	write(sockfd, sendline, MAXLINE);
 	
 	read(sockfd, recvline, MAXLINE);
@@ -122,8 +130,35 @@ int main (int argc, char ** argv)
 	}
 		
 	// Send RCPT TO command.
+	strcpy(sendline, "RCPT TO: <");
+	strcat(sendline, recipient_address);
+	strcat(sendline, ">\r\n");
+	printf("%s\n", sendline);
+	write(sockfd, sendline, MAXLINE);
+
+	read(sockfd, recvline, MAXLINE);
+	printf("%s\n", recvline);
+	temp = strtok(recvline, " ");
+	if (strcmp(temp, "250")!=0)
+	{
+		printf("250 reply not received from server.\n");
+		exit(0);
+	}
+
 	
 	// Send DATA command.
+	strcpy(sendline, "DATA");
+	printf("%s\n", sendline);
+	write(sockfd, sendline, MAXLINE);
+
+	read(sockfd, recvline, MAXLINE);
+	printf("%s\n", recvline);
+	temp = strtok(recvline, " ");
+	if (strcmp(temp, "250")!=0)
+	{
+		printf("250 reply not received from server.\n");
+		exit(0);
+	}
 	
 	// Send message data.
 	
