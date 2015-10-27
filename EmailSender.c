@@ -179,7 +179,7 @@ int main (int argc, char ** argv)
 	printf("%s\n", recvline);
 	temp = strtok(recvline, " ");
 
-	close(sock);
+	close(sockfd);
 
 	exit(0);	
 }  
